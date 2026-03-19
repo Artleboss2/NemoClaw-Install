@@ -1,4 +1,4 @@
-#How to Install NVIDIA NemoClaw: Step-by-Step Guide
+# How to Install NVIDIA NemoClaw: Step-by-Step Guide
 
 NemoClaw is an open-source stack by NVIDIA designed to run OpenClaw AI agents safely by adding privacy controls, sandboxing, and security guardrails.
 
@@ -14,11 +14,11 @@ Hardware: At least 8 GB of RAM (16 GB highly recommended) and around 40 GB of fr
 
 API Key: An NVIDIA API Key (you can get one for free at `build.nvidia.com`).
 
-Step 1: Prepare Your System
+## Step 1: Prepare Your System
 
 NemoClaw requires Docker and Node.js (version 20 or 22) to run correctly.
 
-###1. Verify Docker:
+### 1. Verify Docker:
 Ensure Docker is installed and that you have the right permissions without using sudo every time:
 ```
 docker ps
@@ -26,7 +26,7 @@ docker ps
 
 (If you get a permission denied error, run `sudo usermod -aG docker $USER`, then log out and log back in).
 
-###2. Install Node.js:
+### 2. Install Node.js:
 Run the following commands to install Node.js (version 22):
 ```
 curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash -
@@ -35,7 +35,7 @@ sudo apt-get install -y nodejs
 
 Verify the installation by running `node --version`.
 
-##Step 2: Install NemoClaw
+## Step 2: Install NemoClaw
 
 NVIDIA provides a simple installation script that handles the heavy lifting.
 
@@ -46,7 +46,7 @@ curl -fsSL [https://nvidia.com/nemoclaw.sh](https://nvidia.com/nemoclaw.sh) | ba
 
 Note: Depending on your system configuration, you might need to run it with `sudo bash` if you encounter permission errors.
 
-##Step 3: Onboard Your Agent
+## Step 3: Onboard Your Agent
 
 Once the installation is complete, you need to configure your sandbox and inference settings.
 
@@ -65,17 +65,17 @@ Accept the default configurations for the security policies and sandbox setup.
 
 Note: The script will download the sandbox image (approx. 2.4 GB). This may take a few minutes.
 
-##Step 4: Connect and Chat!
+## Step 4: Connect and Chat!
 
 Your secure environment is now ready. It's time to connect to your sandboxed agent.
 
-###1. Connect to the sandbox:
+### 1. Connect to the sandbox:
 Replace `my-assistant` with the name you chose in Step 3.
 ```
 nemoclaw my-assistant connect
 ```
 
-###2. Start the chat interface:
+### 2. Start the chat interface:
 Once inside the isolated sandbox, launch the OpenClaw Text User Interface (TUI):
 
 ```
