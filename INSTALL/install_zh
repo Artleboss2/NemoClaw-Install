@@ -1,0 +1,95 @@
+# 如何安裝 NVIDIA NemoClaw：逐步指南
+
+NemoClaw 是 NVIDIA 提供的一個開源堆疊，旨在透過加入隱私控制、沙盒（sandboxing）與安全護欄來安全地執行 OpenClaw AI 代理程式。
+
+請按照以下簡單步驟來設定並執行您的安全 AI 代理程式。
+
+## 先決條件
+
+在開始之前，請確保您的系統符合以下要求：
+
+* **作業系統：** Linux（建議使用 Ubuntu 22.04+）。支援 macOS 和 Windows（透過 WSL2），但處於實驗階段。
+* **硬體：** 至少 8 GB 記憶體（強烈建議 16 GB）和約 40 GB 的可用磁碟空間。
+* **API 金鑰：** NVIDIA API 金鑰（您可以在 `build.nvidia.com` 免費取得）。
+
+## 第 1 步：準備您的系統
+
+NemoClaw 需要安裝 Docker 和 Node.js（版本 20 或 22）才能正常運作。
+
+### 1. 驗證 Docker：
+
+確保已安裝 Docker，且您擁有適當的權限，而無需每次都使用 `sudo`：
+
+```bash
+docker ps
+```
+
+（如果您收到「permission denied」權限拒絕錯誤，請執行 `sudo usermod -aG docker $USER`，然後登出並重新登入）。
+
+### 2. 安裝 Node.js：
+
+執行以下指令來安裝 Node.js（版本 22）：
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+透過執行 `node --version` 來驗證安裝。
+
+## 第 2 步：安裝 NemoClaw
+
+NVIDIA 提供了一個簡單的安裝指令碼來處理繁重的工作。
+
+在您的終端機中執行以下指令：
+
+```bash
+curl -fsSL https://nvidia.com/nemoclaw.sh | bash
+```
+
+注意：根據您的系統設定，如果遇到權限錯誤，您可能需要使用 `sudo bash` 來執行它。
+
+## 第 3 步：設定您的代理程式 (Onboarding)
+
+安裝完成後，您需要設定您的沙盒 (sandbox) 與推論 (inference) 設定。
+
+執行設定精靈：
+
+```bash
+nemoclaw onboard
+```
+
+在這個互動過程中：
+
+* 為您的助理命名（例如，`my-assistant`）。
+* 在出現提示時輸入您的 NVIDIA API 金鑰。
+* 接受安全性原則與沙盒設定的預設設定。
+
+注意：該指令碼將下載沙盒映像檔（約 2.4 GB）。這可能需要幾分鐘的時間。
+
+## 第 4 步：連線並聊天！
+
+您的安全環境現在已準備就緒。是時候連線到您隔離的代理程式了。
+
+### 1. 連線到沙盒：
+
+將 `my-assistant` 替換為您在第 3 步中選擇的名稱。
+
+```bash
+nemoclaw my-assistant connect
+```
+
+### 2. 啟動聊天介面：
+
+進入隔離的沙盒後，啟動 OpenClaw 文字使用者介面 (TUI)：
+
+```bash
+openclaw tui
+```
+
+恭喜！您現在可以安全地輸入訊息並與隔離的 AI 代理程式進行互動了。
+
+## 疑難排解提示
+
+* **記憶體不足 (OOM) 錯誤：** 如果安裝在具有 8GB 記憶體的機器上中斷，請嘗試在系統中新增交換空間 (swap space)。
+* **WSL2 使用者：** 如果您使用適用於 Linux 的 Windows 子系統，並且在執行 `nemoclaw onboard` 期間遇到 GPU 穿透 (GPU passthrough) 問題，您可能需要手動啟動 OpenShell 閘道器，且不加上 `--gpu` 標籤。
